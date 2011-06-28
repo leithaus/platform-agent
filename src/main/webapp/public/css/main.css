@@ -1,0 +1,46 @@
+html, body {
+  font-family: Geneva, "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Lucida, "Trebuchet MS", Tahoma, sans-serif;
+}
+
+div#header {
+  height: 120px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  background: #ccc;
+}
+
+div#header h1 {
+  font-size: 30px;
+  margin: 70px 10px 10px;
+}
+
+div#navbar {
+  font-size: 20px;
+  text-transform: lowercase;
+  height: 398px;
+}
+
+div#navbar div.inner {
+  margin: 1px 0;
+  border: 1px solid #ccc;
+}
+
+div#navbar a {
+  text-decoration: none;
+  color: #1a8036;
+}
+
+div#navbar a:hover {
+  text-decoration: underline;
+  color: #26bf52;
+}
+
+div.pagents-link {
+  height: 348px;
+  padding: 5px 10px;
+}
+
+div.connections-link {
+  padding: 5px 10px;
+}

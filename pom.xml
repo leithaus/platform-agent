@@ -13,7 +13,9 @@
   <properties>
     <port>8188</port>
     
-    <cx.version>2.0.2</cx.version>
+    <scala.version>2.9.0-1</scala.version>
+    
+    <cx.version>2.0.3</cx.version>
     <cx.router>org.munat.pagent.Main</cx.router>
     
     <scala-plugin.version>2.15.0</scala-plugin.version>
@@ -21,6 +23,59 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
+  
+  <repositories>
+    <repository>
+      <id>scala-tools.releases</id>
+      <name>Scala-Tools Dependencies Repository for Releases</name>
+      <url>http://scala-tools.org/repo-releases</url>
+    </repository>
+    
+    <repository>
+      <id>scala-tools.org</id>
+      <name>Scala-Tools Maven2 Repository</name>
+      <url>http://scala-tools.org/repo-snapshots</url>
+      <snapshots />
+    </repository>
+
+    <repository>
+      <id>stax-releases</id>
+      <url>http://mvn.stax.net/content/repositories/releases</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>stax-snapshots</id>
+      <url>http://mvn.stax.net/content/repositories/snapshots</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+
+    <repository>
+      <id>repository.codehaus.org</id>
+      <name>Codehaus</name>
+      <url>http://repository.codehaus.org/com/thoughtworks</url>
+    </repository>
+
+    <repository>
+      <id>repository.gwt.rewraps</id>
+      <name>gwt-maven-rewraps</name>
+      <url>http://gwt-maven-rewraps.googlecode.com/hg/</url>
+    </repository>
+    
+    <repository>
+      <id>basex</id>
+      <name>BaseX Maven Repository</name>
+      <url>http://files.basex.org/maven</url>
+    </repository>
+
+    <repository>
+      <id>biosim</id>
+      <url>http://biosimrepomirror.googlecode.com/svn/trunk</url>
+    </repository>     
+  </repositories>
 
   <dependencies>
     <dependency>
@@ -64,9 +119,29 @@
     </dependency>
     <dependency>
       <groupId>org.scala-tools.testing</groupId>
-      <artifactId>specs_2.8.1</artifactId>
-      <version>1.6.6</version>
+      <artifactId>specs_2.9.0-1</artifactId>
+      <version>1.6.8</version>
       <scope>test</scope>
+    </dependency>
+      <dependency>
+      <groupId>org.scala-tools.testing</groupId>
+      <artifactId>scalacheck_2.9.0-1</artifactId>
+      <version>1.9</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scalatest</groupId>
+      <artifactId>scalatest_2.9.0</artifactId>
+      <version>1.6.1.RC1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-tools.sxr</groupId>
+      <artifactId>sxr_2.9.0</artifactId>
+      <version>0.2.7</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>jline</artifactId>
+      <version>2.9.0-1</version>
     </dependency>
     <!-- Mail -->
     <dependency>
@@ -74,6 +149,209 @@
       <artifactId>mail</artifactId>
       <version>1.4.1</version>
     </dependency>
+    <!-- SpecialK dependencies -->
+    <dependency>
+      <groupId>org.coconut.forkjoin</groupId>
+      <artifactId>jsr166y</artifactId>
+      <version>070108</version>
+    </dependency>
+    <dependency>
+      <groupId>net.liftweb</groupId>
+      <artifactId>lift-mapper_2.9.0-1</artifactId>
+      <version>2.4-M1</version>
+    </dependency>
+    <dependency>
+      <groupId>jlex</groupId>
+      <artifactId>JLex-local</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>cup</groupId>
+      <artifactId>java-cup-11a</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>cup</groupId>
+      <artifactId>java-cup-11a-runtime</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>net.lag</groupId>
+      <artifactId>configgy</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>com.rabbitmq</groupId>
+      <artifactId>rabbitmq-client</artifactId>
+      <version>1.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.jettison</groupId>
+      <artifactId>jettison</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <!-- for Prolog capabilities -->
+    <dependency>
+      <groupId>alice.tuprolog</groupId>
+      <artifactId>2p</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>org.prolog4j</groupId>
+      <artifactId>prolog4j-api-0.2.0</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>org.prolog4j</groupId>
+      <artifactId>prolog4j-tuprolog-0.2.0</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>xpp3</groupId>
+      <artifactId>xpp3_min</artifactId>
+      <version>1.1.4c</version>
+    </dependency> 
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.3.1</version>
+    </dependency> 
+    <dependency>
+      <groupId>com.eaio.eaio</groupId>
+      <artifactId>uuid</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scalaxb</groupId>
+      <artifactId>scalaxb</artifactId>
+      <version>local-update</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xmldb</groupId>
+      <artifactId>xmldb-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jaxrx</groupId>
+      <artifactId>jax-rx</artifactId>
+      <version>1.2.9</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.xml.xquery</groupId>
+      <artifactId>xqj-api</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.basex</groupId>
+      <artifactId>basex</artifactId>
+      <version>6.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.basex</groupId>
+      <artifactId>basex-api</artifactId>
+      <version>6.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.sleepycat</groupId>
+      <artifactId>db</artifactId>
+      <version>local</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jivesoft</groupId>
+      <artifactId>smack</artifactId>
+      <version>local</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jivesoft</groupId>
+      <artifactId>smackx</artifactId>
+      <version>local</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.hypergraphdb</groupId>
+      <artifactId>hgdbfull</artifactId>
+      <version>local</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.lag</groupId>
+      <artifactId>configgy</artifactId>
+      <version>local</version>
+    </dependency>
+
+
+      <dependency>
+        <groupId>xpp3</groupId>
+        <artifactId>xpp3_min</artifactId>
+        <version>1.1.4c</version>
+      </dependency> 
+      <dependency>
+        <groupId>com.thoughtworks.xstream</groupId>
+        <artifactId>xstream</artifactId>
+        <version>1.3.1</version>
+      </dependency> 
+      <dependency>
+        <groupId>com.eaio.eaio</groupId>
+        <artifactId>uuid</artifactId>
+        <version>3.1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scalaxb</groupId>
+        <artifactId>scalaxb</artifactId>
+        <version>local-update</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.squeryl</groupId>
+        <artifactId>squeryl_2.9.0-1</artifactId>
+        <version>0.9.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.scalaquery</groupId>
+        <artifactId>scalaquery_2.9.0</artifactId>
+        <version>0.9.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>javax.persistence</groupId>
+        <artifactId>persistence-api</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.ws.commons.util</groupId>
+        <artifactId>ws-commons-util</artifactId>
+        <version>1.0.2</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-pool</groupId>
+        <artifactId>commons-pool</artifactId>
+        <version>1.4</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.xmlrpc</groupId>
+        <artifactId>xmlrpc-client</artifactId>
+        <version>3.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlrpc</groupId>
+        <artifactId>xmlrpc-common</artifactId>
+        <version>3.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.xmlrpc</groupId>
+        <artifactId>xmlrpc-server</artifactId>
+        <version>3.1.2</version>
+      </dependency>
   </dependencies>
 
   <build>
@@ -84,18 +362,39 @@
         <groupId>org.scala-tools</groupId>
         <artifactId>maven-scala-plugin</artifactId>
         <version>${scala-plugin.version}</version>
+        <configuration>
+    	    <scalaVersion>${scala.version}</scalaVersion>
+          <charset>${project.build.sourceEncoding}</charset>
+          <jvmArgs>
+    	      <jvmArg>-Djava.library.path=$HGDB_ROOT/native</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
+            <jvmArg>-DpackageLinkDefs=file://${project.build.directory}/packageLinkDefs.properties</jvmArg>
+          </jvmArgs>
+    	    <args>
+    	      <arg>-deprecation</arg>
+    	      <arg>-unchecked</arg>
+    	      <!-- <arg>-Xprint:selectivecps</arg> -->
+    	      <arg>-Xplugin:/Users/lgm/.m2/repository/org/scala-tools/sxr/sxr_2.9.0/0.2.7/sxr_2.9.0-0.2.7.jar</arg>
+    	      <arg>-P:sxr:base-directory:${basedir}/src</arg>
+    	      <arg>-P:continuations:enable</arg>
+          </args>
+    	    <compilerPlugins>
+          	<compilerPlugin>	      
+              <groupId>org.scala-lang.plugins</groupId>
+      	      <artifactId>continuations</artifactId>
+              <version>${scala.version}</version>
+      	    </compilerPlugin>
+    	      <compilerPlugin>	      
+              <groupId>org.scala-tools.sxr</groupId>
+              <artifactId>sxr_2.9.0</artifactId>
+              <version>0.2.7</version>
+          	</compilerPlugin>
+          </compilerPlugins>
+        </configuration>
         <executions>
           <execution>
-            <id>scala-compile</id>
-            <phase>compile</phase>
             <goals>
               <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>scala-test-compile</id>
-            <phase>test-compile</phase>
-            <goals>
               <goal>testCompile</goal>
             </goals>
           </execution>

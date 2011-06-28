@@ -18,5 +18,9 @@
     <dispatcher>INCLUDE</dispatcher>
     <dispatcher>ERROR</dispatcher>
   </filter-mapping>
+  
+  <listener>
+    <listener-class>org.munat.pagent.DbListener</listener-class>
+  </listener>
 
 </web-app>

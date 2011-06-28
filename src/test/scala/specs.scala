@@ -5,7 +5,7 @@ import ru.circumflex._, core._, web._
 import org.specs.runner.JUnit4
 import org.specs.Specification
 
-class SpecsTest extends JUnit4(MySpec)
+/*class SpecsTest extends JUnit4(MySpec)
 
 object MySpec extends Specification {
 
@@ -23,4 +23,4 @@ object MySpec extends Specification {
       MockApp.get("/test").execute().getContent must_== "I'm fine, thanks!"
     }
   }
-}
+}*/
