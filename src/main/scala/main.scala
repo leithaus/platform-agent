@@ -16,10 +16,8 @@ import CCLDSL._
 import PersistedMonadicTS._
 import com.biosimilarity.lift.lib.SpecialKURIDefaults._
 
-
 class Main extends RequestRouter {
   val log = new Logger("org.munat.pagent")
-  val pattern = "/pagent"
   
   implicit def toPattern(
     s : String
@@ -32,20 +30,39 @@ class Main extends RequestRouter {
 
   implicit def toValue( s : String ) : mTT.Resource = mTT.Ground( s )
   
+  def handleResponse( resp: Option[com.biosimilarity.lift.model.store.usage.PersistedMonadicTS.mTT.Resource] ) = println("***** RESPONSE: " + resp.map(_.toString).getOrElse("Hmmm"))
+  
   get("/") = {
-    Db.termstore match {
+/*    Db.termstore match {
       case Some(ts) => reset { for( e <- ts.get( pattern ) ) { println( "***** MESSAGE RECEIVED: " + e ) } }
       case None => println("***** TERMSTORE not found")
-    }
+    }*/
     
     ftl("index.ftl")
   }
   
   post("/") = {
-    val payload = param.getOrElse("ipAddress", "localhost") + param.getOrElse("path", "/")
-    println("***** PAYLOAD: " + payload)
+    val clientSessionUuidSnd = UUID.randomUUID.toString
+    val clientSessionUuidRec = UUID.randomUUID.toString
+    
     Db.termstore match {
-      case Some(ts) => reset { ts.put( pattern, payload ) }
+      case Some(ts) => 
+        reset { ts.put( 
+          "monikerAgentServer",
+          "clientSession( sendChan( " + clientSessionUuidSnd + " ), recvChan( " + clientSessionUuidRec + " ) )"
+        ) }
+        
+        reset { ts.put(
+          clientSessionUuidSnd,
+          "createNewAgent( ipAddr( " + param.getOrElse("ipAddress", "localhost") + " ), path( " + param.getOrElse("path", "/") + " ) )"
+        ) }
+        
+        reset { for( e <- ts.get( clientSessionUuidRec ) ) { handleResponse( e ) } }
+        
+        reset { ts.put(
+          clientSessionUuidSnd,
+          "queryLog( session( " + clientSessionUuidSnd + " ), ip( " + param.getOrElse("ipAddress", "localhost") + " ), path(" + param.getOrElse("path", "/") + " ) )"
+        ) }
       case None => println("+++++ TERMSTORE not found")
     }
     
