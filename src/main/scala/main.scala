@@ -44,25 +44,26 @@ class Main extends RequestRouter {
   post("/") = {
     val clientSessionUuidSnd = UUID.randomUUID.toString
     val clientSessionUuidRec = UUID.randomUUID.toString
+    val connectString = "clientSession( sendChan( " + clientSessionUuidSnd + " ), recvChan( " + clientSessionUuidRec + " ) )"
+    val newAgentString = "createNewAgent( ipAddr( " + param.getOrElse("ipAddress", "localhost") + " ), path( " + param.getOrElse("path", "/") + " ) )"
+    val queryLogString = "queryLog( session( " + clientSessionUuidSnd + " ), ip( " + param.getOrElse("ipAddress", "localhost") +
+      " ), path(" + param.getOrElse("path", "/") + " ) )"
     
     Db.termstore match {
       case Some(ts) => 
-        reset { ts.put( 
-          "monikerAgentServer",
-          "clientSession( sendChan( " + clientSessionUuidSnd + " ), recvChan( " + clientSessionUuidRec + " ) )"
-        ) }
+        println("+++++ connectString: " + connectString)
+        reset { ts.put(  "monikerAgentServer", connectString ) }
         
-        reset { ts.put(
-          clientSessionUuidSnd,
-          "createNewAgent( ipAddr( " + param.getOrElse("ipAddress", "localhost") + " ), path( " + param.getOrElse("path", "/") + " ) )"
-        ) }
+        println("+++++ newAgentString: " + newAgentString)
+        reset { ts.put( clientSessionUuidSnd, newAgentString ) }
         
+        println("WAITING FOR GODOT............................")
         reset { for( e <- ts.get( clientSessionUuidRec ) ) { handleResponse( e ) } }
+        println("STILL WAITING............................")
         
-        reset { ts.put(
-          clientSessionUuidSnd,
-          "queryLog( session( " + clientSessionUuidSnd + " ), ip( " + param.getOrElse("ipAddress", "localhost") + " ), path(" + param.getOrElse("path", "/") + " ) )"
-        ) }
+        println("+++++ queryLogString: " + queryLogString)
+        reset { ts.put( clientSessionUuidRec, queryLogString ) }
+        
       case None => println("+++++ TERMSTORE not found")
     }
     
