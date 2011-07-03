@@ -9,7 +9,9 @@ import com.biosimilarity.lift.model.store.usage._
 import com.biosimilarity.lift.model.store.xml._
 import com.biosimilarity.lift.model.store.xml.datasets._
 import com.biosimilarity.lift.lib._
-import scala.util.continuations._ 
+import scala.util.continuations._
+import scala.concurrent.cpsops._
+import scala.concurrent.{Channel => Chan, _}
 import java.net.URI
 import java.util.UUID
 import CCLDSL._
@@ -42,8 +44,8 @@ class Main extends RequestRouter {
   }
   
   post("/") = {
-    val clientSessionUuidSnd = UUID.randomUUID.toString
-    val clientSessionUuidRec = UUID.randomUUID.toString
+    val clientSessionUuidSnd = "id_" + UUID.randomUUID.toString.replace("-","_")
+    val clientSessionUuidRec = "id_" + UUID.randomUUID.toString.replace("-","_")
     val connectString = "clientSession( sendChan( " + clientSessionUuidSnd + " ), recvChan( " + clientSessionUuidRec + " ) )"
     val newAgentString = "createNewAgent( ipAddr( " + param.getOrElse("ipAddress", "localhost") + " ), path( " + param.getOrElse("path", "/") + " ) )"
     val queryLogString = "queryLog( session( " + clientSessionUuidSnd + " ), ip( " + param.getOrElse("ipAddress", "localhost") +
