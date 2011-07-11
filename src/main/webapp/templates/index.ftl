@@ -9,89 +9,81 @@
     <link rel="stylesheet" type="text/css" media="screen" href="/css/reset.css"/> 
     <link rel="stylesheet" type="text/css" media="screen" href="/css/text.css"/> 
     <link rel="stylesheet" type="text/css" media="screen" href="/css/960_16_col.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/dojo/1.6/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/jquery-ui-1.8.14.custom.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="/css/main.css"/>
     
-    <script src="/js/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+    <script type="text/javascript" src="/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui-1.8.14.custom.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.form.js"></script>
     
     <script type="text/javascript">
-      dojo.require("dijit.form.Form");
-      dojo.require("dijit.form.Button");
-      dojo.require("dijit.form.ValidationTextBox");
-      dojo.require("dijit.layout.TabContainer");
-      dojo.require("dijit.layout.ContentPane");
-      
-      var ipRx = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-      
-			dojoConfig = {
-				isDebug: true,
-				parseOnLoad: true,
-				baseUrl: '/',
-				modulePaths: {
-					"log_items": "log_items",
-					"connections" : "connections"
-				}
-			};
-      
-      dojo.addOnLoad(function() {
-        dojo.connect(dojo.byId('submit'), 'onclick', function(event){
-            dojo.stopEvent(event);
-            dojo.xhrPost({
-              form: 'launchForm',
-              handleAs: 'json',
-              load: function(data) {
-                console.log(data);
-                var success = data.success;
-                var msg = data.message;
-                if(success) {
-                  alert(msg);
-                }
-              },
-              error: function(error) {
-                console.log(error);
-              }
-            }) // xhrPost()
-          }); // connect()
-      });
+      $(function() {
+    		$('#tabs').tabs();
+    		
+    		var options = { 
+            target: '#tabs',
+            success: handleLaunch,
+            dataType: 'json',
+            clearForm: true,
+            resetForm: true
+        };
+    		
+    		$('#launch-form').ajaxForm(options);
+    		
+    		$('#submit').button({
+          icons: { primary: 'ui-icon-gear' },
+          label: 'Launch!'
+        });
+        
+        var agents = [];
+    		
+    		function handleLaunch(responseText, statusText, xhr, $form)  {
+    		  if (responseText["success"] && responseText["success"] == "true")
+    		    console.log( "responseText.sndId: " + responseText["sndId"] + "; .host: " + responseText["host"] + "; .path: " + responseText["path"] );
+    		  else
+    		    console.log( "responseText.success: " + responseText["success"] + "; .message: " + responseText["message"] )
+    		    
+    		  console.log( "statusText: " + statusText );
+    		  console.log( "xhr: " + xhr );
+    		  
+    		  agents.push(responseText["sndId"]);
+          $('#tabs').tabs('add','/rest/agents/' + responseText["sndId"], responseText["host"] + responseText["path"]);
+        }
+    	});
     </script>
   </head>
   <body>
-    <div class="container_16 claro">
+    <div class="container_16">
       <div id="header" class="grid_16 clearfix">
           <h1>Platform Agent</h1>
       </div>
-      <div id="content" class="clearfix">
-        <div id="navbar" class="grid_4 clearfix">
-          <div class="inner">
-            <div class="pagents-link"><a href="#pagents">Platform agents</a></div>
-            <div class="connections-link"><a href="#connections">Connections</a></div>
-          </div>
-        </div>
-        <div id="tabpanel" class="grid_12 clearfix">
-          <div dojoType="dijit.layout.TabContainer" style="width: 698px; height: 400px;">
-            <div dojoType="dijit.layout.ContentPane" title="Launch" selected="true">
-              <form id="launchForm" action="" method="POST">
-                <dl>
-                  <dt><label for="ipAddress">IP Address</label></dt>
-                  <dd><input id="ipAddress" name="ipAddress" type="text" /></dd>
-
-                  <dt><label for="path">Path</label></dt>
-                  <dd><input id="path" name="path" type="text" /></dd>
-                </dl>
-                <input id="submit" type="submit" value="Launch!">
-              </form>
-            </div>
-            <div dojoType="dijit.layout.ContentPane" title="Monitor">
-              Monitoring...
-            </div>
-            <div dojoType="dijit.layout.ContentPane" title="Manage">
-              Managing...
-            </div>
-          </div>
+      <div class="grid_16 clearfix">
+        <div id="tabs">
+        	<ul>
+        		<li><a href="#tabs-1">Launch</a></li>
+        	</ul>  
+      		<div id="tabs-1">
+      		  <form id="launch-form" action="/" method="post">
+      		    <fieldset>
+      		      <legend>Launch an Agent</legend>
+                <p>
+                  <label for="ip-address">IP Address</label><br/>
+                  <input id="ip-address" type="text" name="ipAddress"/>
+                </p>
+                <p>
+                  <label for="path">Path</label><br/>
+                  <input id="path" type="text" name="path"/>
+                </p>
+                <p>
+                  <input id="submit" type="submit" value="Launch"/>
+                </p>
+              </fieldset>
+            </form>
+      		</div>
         </div>
       </div>
       <div id="footer" class="grid_16 clearfix">
-    
+        
       </div>
     </div>
   </body>

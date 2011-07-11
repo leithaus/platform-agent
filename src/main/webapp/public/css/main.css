@@ -15,32 +15,8 @@ div#header h1 {
   margin: 70px 10px 10px;
 }
 
-div#navbar {
-  font-size: 20px;
-  text-transform: lowercase;
-  height: 398px;
-}
-
-div#navbar div.inner {
-  margin: 1px 0;
-  border: 1px solid #ccc;
-}
-
-div#navbar a {
-  text-decoration: none;
-  color: #1a8036;
-}
-
-div#navbar a:hover {
-  text-decoration: underline;
-  color: #26bf52;
-}
-
-div.pagents-link {
-  height: 348px;
-  padding: 5px 10px;
-}
-
-div.connections-link {
-  padding: 5px 10px;
+legend {
+  font-size: 18px;
+  font-weight: normal;
+  padding: 12px 0 24px;
 }
